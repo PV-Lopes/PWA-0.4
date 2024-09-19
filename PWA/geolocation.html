@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/geo.css">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#4CAF50"/>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <title>Geolocalização</title>
+</head>
+<body>
+    <h1>Obter Localização</h1>
+    <p id="location-status">Clique no botão abaixo para obter sua localização atual:</p>
+    <button id="get-location">Obter Localização</button>
+
+    <p id="location-result"></p>
+
+    <a href="index.html">Voltar para a Página Inicial</a>
+
+    <script>
+        document.getElementById('get-location').addEventListener('click', function() {
+            const status = document.getElementById('location-status');
+            const result = document.getElementById('location-result');
+
+            if ('geolocation' in navigator) {
+                status.textContent = 'Obtendo localização...';
+
+                navigator.geolocation.getCurrentPosition(
+                    (position) => {
+                        const { latitude, longitude } = position.coords;
+                        result.textContent = `Latitude: ${latitude}, Longitude: ${longitude}`;
+                        status.textContent = 'Localização obtida com sucesso!';
+                    },
+                    (error) => {
+                        status.textContent = 'Falha ao obter localização.';
+                        result.textContent = `Erro: ${error.message}`;
+                    }
+                );
+            } else {
+                status.textContent = 'Geolocalização não é suportada neste navegador.';
+            }
+        });
+    </script>
+</body>
+</html>
